@@ -1,0 +1,64 @@
+{% extends 'seller-header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  </head>
+
+  <body>
+    <!--================Home Banner Area =================-->
+       <div class="mb-3 mb-md-0">
+          <h2 style="text-align: center;margin-top: 10px;">Product Details</h2>
+        </div>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Single Product Area =================-->
+    <div class="product_image_area">
+      <div class="container">
+        <div class="row s_product_inner">
+          <div class="col-lg-6">
+            <div class="s_product_img">
+              <div
+                id="carouselExampleIndicators"
+                class="carousel slide"
+                data-ride="carousel"
+              >
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img
+                      class="d-block w-100"
+                      src="{{product.product_picture.url}}" style="width: 100px;height: 400px;"
+                      alt="First slide"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 offset-lg-1">
+            <div class="s_product_text">
+              <h3>{{product.product_name}}</h3>
+              <h2>{{product.product_price}}</h2>
+              <ul class="list">
+                <li>
+                  <a class="active" href="#">
+                    <span>Category</span> : {{product.product_catagory}}</a>
+                </li>
+              </ul>
+              <p>
+                {{product.product_desc}}
+              </p>
+              <div class="card_area">
+                <a class="btn btn-primary" href="{% url 'seller-product-edit' pk=product.pk %}">EDIT</a>
+                <a class="btn btn-danger" href="{% url 'seller-product-delete' pk=product.pk %}">DELETE</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--================End Single Product Area =================-->
+
+  </body>
+</html>
+{% endblock %}

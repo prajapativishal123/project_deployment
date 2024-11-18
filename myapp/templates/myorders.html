@@ -1,0 +1,106 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://js.stripe.com/v3"></script>
+  </head>
+
+  <body>
+
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+      <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+          <div
+            class="banner_content d-md-flex justify-content-between align-items-center"
+          >
+            <div class="mb-3 mb-md-0">
+              <h2>My Orders</h2>
+            </div>
+            <div class="page_link">
+              <a href="index.html">Home</a>
+              <a href="cart.html">My Orders</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+      <div class="container">
+        <div class="cart_inner">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Purchased Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in carts %}
+                <tr>
+                  <td>
+                    <div class="media">
+                      <div class="d-flex">
+                        <img
+                          src="{{i.product.product_picture.url}}" style="width: 100px;
+                          height: 100px; border-radius: 50px;"
+                          alt=""
+                        />
+                      </div>
+                      <div class="media-body">
+                        <p>{{i.product.product_name}}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h5>{{i.product.product_price}}</h5>
+                  </td>
+                  <td>
+                    <div class="product_count">
+                      <form name="change_qty" method="post" action="{% url 'change-qty' %}">
+                        {% csrf_token %}
+                      <input type="number" onchange="this.form.submit();" 
+                        name="product_qty"
+                        id="sst"
+                        min="1"
+                        max="10"
+                        value="{{i.product_qty}}"
+                        title="Quantity:"
+                        class="input-text qty"
+                        readonly 
+                      />
+                      <input type="hidden" name="cid" value="{{i.pk}}">
+                       </form>
+                    </div>
+                  </td>
+                  <td>
+                    <h5>{{i.total_price}}</h5>
+                  </td>
+                  <td>
+                    <h5>{{i.date}}</h5>
+                  </td>
+                </tr>
+               
+               {% endfor %}
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+  </body>
+  
+</html>
+{% endblock%}
